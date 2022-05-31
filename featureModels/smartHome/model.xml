@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+	<properties>
+		<graphics key="autolayoutconstraints" value="false"/>
+		<graphics key="legendposition" value="885,20"/>
+		<graphics key="legendautolayout" value="false"/>
+		<graphics key="showshortnames" value="false"/>
+		<graphics key="layout" value="horizontal"/>
+		<graphics key="showcollapsedconstraints" value="true"/>
+		<graphics key="legendhidden" value="false"/>
+		<graphics key="layoutalgorithm" value="1"/>
+	</properties>
+	<struct>
+		<and abstract="true" mandatory="true" name="SmartHome">
+			<alt mandatory="true" name="Intrusion Detection">
+				<graphics key="collapsed" value="false"/>
+				<feature name="Perimeter Instrusion"/>
+				<feature name="House Intrusion"/>
+			</alt>
+			<feature mandatory="true" name="Alarm"/>
+			<feature mandatory="true" name="Fire Detection"/>
+			<or mandatory="true" name="Sprinkler">
+				<feature name="Wet"/>
+				<feature name="Dry"/>
+			</or>
+		</and>
+	</struct>
+	<constraints>
+		<rule>
+			<imp>
+				<var>Intrusion Detection</var>
+				<var>Alarm</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>Fire Detection</var>
+				<var>Alarm</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>Fire Detection</var>
+				<var>Sprinkler</var>
+			</imp>
+		</rule>
+	</constraints>
+</featureModel>
