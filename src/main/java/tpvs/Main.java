@@ -74,11 +74,7 @@ public class Main {
 			task.execute();
 			Archive archive = task.getInstance(Archive.class);
 			for (Individual individual : archive) {
-//				long endTime2 = System.nanoTime();
-//				long timeElapsed2 = endTime2 - startTime;
 				System.out.println(individual.getObjectives().getValues());
-				//					System.out.println(individual.getObjectives().getValues().toArray()[0]+"\t"+(timeElapsed2 / 1000000000.0));
-//				System.out.println(apmk.APMK(parser.getMutantMap(), sortedTestsByMaxKill)+"\t"+(timeElapsed1 / 1000000000.0)+"\t"+individual.getObjectives().getValues().toArray()[0]+"\t"+(timeElapsed2 / 1000000000.0));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

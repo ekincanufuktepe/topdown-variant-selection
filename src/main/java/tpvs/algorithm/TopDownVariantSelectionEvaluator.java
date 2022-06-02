@@ -35,7 +35,7 @@ public class TopDownVariantSelectionEvaluator implements Evaluator<TopDownVarian
 		if(fc != 1.0) {
 			return 0.0;
 		}
-		System.out.println("Feature Cov: "+ fc + ", Selection Count: " + selectionCount);
+//		System.out.println("Feature Cov: "+ fc + ", Selection Count: " + selectionCount);
 		Double fcmavsScore = sc * fc;
 		return fcmavsScore;  
 	}
