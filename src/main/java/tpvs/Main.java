@@ -14,10 +14,8 @@ import org.opt4j.optimizers.ea.EvolutionaryAlgorithmModule;
 import org.opt4j.viewer.ViewerModule;
 import org.opt4j.operators.mutate.BasicMutateModule.PermutationType;
 
-import tpvs.algorithm.TopDownVariantSelectionCreator;
 import tpvs.algorithm.TopDownVariantSelectionModule;
 import tpvs.parser.VariantParser;
-import tpvs.variants.Feature;
 import tpvs.variants.FeatureModel;
 import tpvs.variants.Variant;
 
@@ -43,6 +41,50 @@ public class Main {
 //				System.out.println("\t" + f);
 //			}
 //		}
+
+		EvolutionaryAlgorithmModule ea = new EvolutionaryAlgorithmModule();
+		ea.setGenerations(100);
+		ea.setCrossoverRate(0.75);
+		TopDownVariantSelectionModule dtlz = new TopDownVariantSelectionModule();
+
+		BasicMutateModule mm = new BasicMutateModule();
+		mm.setMutationRate(0.3);
+		MutationRateType mtrMutationRateType = MutationRateType.ADAPTIVE;
+		mm.setMutationRateType(mtrMutationRateType);
+
+//		PermutationType pt = PermutationType.INSERT;
+//		mm.setPermutationType(pt);
+
+		BasicCrossoverModule bcm = new BasicCrossoverModule();
+//		bcm.setPermutationType(org.opt4j.operators.crossover.BasicCrossoverModule.PermutationType.BUCKET);
+
+		IndividualCompleterModule icm = new IndividualCompleterModule();
+		icm.setThreads(12);
+		icm.setType(IndividualCompleterModule.Type.PARALLEL);
+
+		ViewerModule viewer = new ViewerModule();
+		viewer.setCloseOnStop(false);
+		
+		Opt4JTask task = new Opt4JTask(false);
+
+					task.init(ea, dtlz, mm, icm, bcm, viewer);
+//		task.init(ea, dtlz, mm, icm, bcm);
+
+		try {
+			task.execute();
+			Archive archive = task.getInstance(Archive.class);
+			for (Individual individual : archive) {
+//				long endTime2 = System.nanoTime();
+//				long timeElapsed2 = endTime2 - startTime;
+				System.out.println(individual.getObjectives().getValues());
+				//					System.out.println(individual.getObjectives().getValues().toArray()[0]+"\t"+(timeElapsed2 / 1000000000.0));
+//				System.out.println(apmk.APMK(parser.getMutantMap(), sortedTestsByMaxKill)+"\t"+(timeElapsed1 / 1000000000.0)+"\t"+individual.getObjectives().getValues().toArray()[0]+"\t"+(timeElapsed2 / 1000000000.0));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			task.close();
+		}
 	}
 
 }
