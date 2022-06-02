@@ -60,6 +60,9 @@ public class VariantParser {
 			if(node.getNodeType() == Node.ELEMENT_NODE) {
 				Element eElement = (Element) node;  
 				if(eElement.getAttributes().getNamedItem("name") != null ) {
+					if(eElement.getAttributes().getNamedItem("abstract") != null) {
+						continue;
+					}
 					Feature feature = new Feature(eElement.getAttributes().getNamedItem("name").getNodeValue());
 					fm.getFeatureList().add(feature);
 					//					System.out.println("feature name: "+ eElement.getAttributes().getNamedItem("name").getNodeValue());
