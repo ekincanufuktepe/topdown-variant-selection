@@ -23,6 +23,15 @@ public class Feature {
 	public void setFeatureID(Integer featureID) {
 		this.featureID = featureID;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(this.featureName.equals(((Feature)obj).getFeatureName())) {
+			return true;
+		}
+		return false;
+	}
+	
 
 	@Override
 	public String toString() {
