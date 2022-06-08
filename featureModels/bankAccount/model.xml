@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+	<properties>
+		<graphics key="showhiddenfeatures" value="true"/>
+		<graphics key="legendautolayout" value="true"/>
+		<graphics key="showshortnames" value="false"/>
+		<graphics key="layout" value="horizontal"/>
+		<graphics key="showcollapsedconstraints" value="true"/>
+		<graphics key="legendhidden" value="false"/>
+		<graphics key="layoutalgorithm" value="1"/>
+	</properties>
+	<struct>
+		<and abstract="true" mandatory="true" name="BankAccount">
+			<feature mandatory="true" name="deposit"/>
+			<feature mandatory="true" name="withdraw"/>
+			<or abstract="true" name="cancellation">
+				<feature name="cancelDeposit"/>
+				<feature name="cancelWithdraw"/>
+			</or>
+			<alt abstract="true" name="extraMoney">
+				<feature name="overdraft"/>
+				<feature name="credit"/>
+			</alt>
+			<feature name="interest"/>
+			<feature name="interestEstimation"/>
+			<feature name="dailyLimit"/>
+		</and>
+	</struct>
+	<constraints>
+		<rule>
+			<imp>
+				<var>overdraft</var>
+				<conj>
+					<var>cancelWithdraw</var>
+					<var>dailyLimit</var>
+				</conj>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>dailyLimit</var>
+				<conj>
+					<var>withdraw</var>
+					<var>cancelWithdraw</var>
+				</conj>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>interestEstimation</var>
+				<var>interest</var>
+			</imp>
+		</rule>
+	</constraints>
+</featureModel>
