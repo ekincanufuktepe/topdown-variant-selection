@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+	<properties>
+		<graphics key="showhiddenfeatures" value="true"/>
+		<graphics key="legendautolayout" value="true"/>
+		<graphics key="showshortnames" value="false"/>
+		<graphics key="layout" value="horizontal"/>
+		<graphics key="showcollapsedconstraints" value="true"/>
+		<graphics key="legendhidden" value="false"/>
+		<graphics key="layoutalgorithm" value="1"/>
+	</properties>
+	<struct>
+		<and abstract="true" mandatory="true" name="StudentAttendanceSystem">
+			<or abstract="true" mandatory="true" name="UserAccess">
+				<feature name="StudentAccess"/>
+				<feature name="TeacherAccess"/>
+			</or>
+			<alt abstract="true" mandatory="true" name="SubmitAttandanceMethod">
+				<feature name="AccessCard"/>
+				<feature name="Barcode"/>
+				<feature name="FingerPrint"/>
+				<feature name="QRCode"/>
+			</alt>
+			<alt abstract="true" mandatory="true" name="Notification">
+				<feature name="Email"/>
+				<feature name="SMS"/>
+			</alt>
+			<or abstract="true" mandatory="true" name="RecordInformation">
+				<feature name="ViewRecord"/>
+				<feature name="UpdateRecord"/>
+				<feature name="MonitorAttendanceStatus"/>
+				<feature name="TraceAttendanceActivity"/>
+			</or>
+			<or abstract="true" mandatory="true" name="ClassManagement">
+				<feature name="ViewClass"/>
+				<feature name="AddNewClass"/>
+				<feature name="UpdateClassDetail"/>
+				<feature name="DeleteClass"/>
+			</or>
+			<or abstract="true" mandatory="true" name="ClassSchedule">
+				<feature name="ViewSchedule"/>
+				<feature name="AddNewSchedule"/>
+				<feature name="EditSchedule"/>
+				<feature name="AssignNewSchedule"/>
+			</or>
+		</and>
+	</struct>
+	<constraints>
+		<rule>
+			<imp>
+				<conj>
+					<var>AddNewClass</var>
+					<conj>
+						<var>AddNewSchedule</var>
+						<conj>
+							<var>DeleteClass</var>
+							<conj>
+								<var>EditSchedule</var>
+								<var>UpdateRecord</var>
+							</conj>
+						</conj>
+					</conj>
+				</conj>
+				<var>TeacherAccess</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>AssignNewSchedule</var>
+				<conj>
+					<var>UpdateClassDetail</var>
+					<conj>
+						<var>EditSchedule</var>
+						<var>AddNewSchedule</var>
+					</conj>
+				</conj>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<conj>
+					<var>ViewRecord</var>
+					<var>MonitorAttendanceStatus</var>
+				</conj>
+				<var>StudentAccess</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>TraceAttendanceActivity</var>
+				<var>UpdateRecord</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>UpdateClassDetail</var>
+				<conj>
+					<var>TeacherAccess</var>
+					<var>AddNewClass</var>
+				</conj>
+			</imp>
+		</rule>
+	</constraints>
+</featureModel>
